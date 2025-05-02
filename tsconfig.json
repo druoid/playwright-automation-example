@@ -6,8 +6,9 @@
       "esModuleInterop": true,
       "moduleResolution": "node",
       "outDir": "dist",
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "typeRoots": ["./node_modules/@types", "./types"]
     },
-    "include": ["src", "playwright.config.ts"],
+    "include": ["src", "**/*.ts", "playwright.config.ts"],
   }
   
