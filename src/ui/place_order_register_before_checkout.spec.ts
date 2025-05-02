@@ -12,7 +12,7 @@ import { DeleteAccountPage } from "../../pages/deleteAccountPage";
 import { products } from "../../support/testData";
 import { generateUser } from "../../support/fakeUser";
 
-test("Place order and register while checkout", async ({ page }) => {
+test("Place order and register before checkout", async ({ page }) => {
   const user = generateUser();
 
   const homePage = new HomePage(page);
