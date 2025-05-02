@@ -1,18 +1,18 @@
-import { test } from '@playwright/test';
+import { test } from "@playwright/test";
 
-import { HomePage } from '../../pages/homePage';
-import { CartPage } from '../../pages/cartPage';
-import { LoginPage } from '../../pages/loginPage';
-import { SignUpPage } from '../../pages/signUpPage';
-import { AccountCreatedPage } from '../../pages/accountCreatedPage';
-import { CheckoutPage } from '../../pages/checkoutPage';
-import { PaymentPage } from '../../pages/paymentPage';
-import { DeleteAccountPage } from '../../pages/deleteAccountPage';
+import { HomePage } from "../../pages/homePage";
+import { CartPage } from "../../pages/cartPage";
+import { LoginPage } from "../../pages/loginPage";
+import { SignUpPage } from "../../pages/signUpPage";
+import { AccountCreatedPage } from "../../pages/accountCreatedPage";
+import { CheckoutPage } from "../../pages/checkoutPage";
+import { PaymentPage } from "../../pages/paymentPage";
+import { DeleteAccountPage } from "../../pages/deleteAccountPage";
 
-import { products } from '../../support/testData';
-import { generateUser } from '../../support/fakeUser';
+import { products } from "../../support/testData";
+import { generateUser } from "../../support/fakeUser";
 
-test('Place order and register while checkout', async ({ page }) => {
+test("Place order and register while checkout", async ({ page }) => {
   const user = generateUser();
 
   const homePage = new HomePage(page);
@@ -59,13 +59,17 @@ test('Place order and register while checkout', async ({ page }) => {
 
   // Address and order review
   await checkoutPage.verifyDeliveryAddress(user.name, user.lastName);
-  
+
   await checkoutPage.verifyBillingAddress(user.name, user.lastName);
   await checkoutPage.reviewOrder(products.blueTop);
   await checkoutPage.enterDescriptionAndPlaceOrder();
 
   // Payment
-  await paymentPage.enterPaymentDetailsAndPayAndConfirm(user.name, user.lastName, user);
+  await paymentPage.enterPaymentDetailsAndPayAndConfirm(
+    user.name,
+    user.lastName,
+    user,
+  );
   await paymentPage.verifyOrderSuccess();
 
   // Delete account

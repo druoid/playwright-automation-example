@@ -1,3 +1,3 @@
 export const products = {
-    blueTop: 'Blue Top',
-  }
+  blueTop: "Blue Top",
+};

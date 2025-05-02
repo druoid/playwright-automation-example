@@ -1,14 +1,14 @@
-import { test, expect, request } from '@playwright/test';
-import { faker } from '@faker-js/faker';
+import { test, expect, request } from "@playwright/test";
+import { faker } from "@faker-js/faker";
 
-test('should create a user, verify login, and return 200 with success message', async () => {
-  const createAccountApiUrl = '/api/createAccount';
-  const loginApiUrl = '/api/verifyLogin';
+test("should create a user, verify login, and return 200 with success message", async () => {
+  const createAccountApiUrl = "/api/createAccount";
+  const loginApiUrl = "/api/verifyLogin";
 
   const user = {
     name: faker.person.firstName(),
     email: faker.internet.email(),
-    password: 'Password123!',
+    password: "Password123!",
     title: faker.person.prefix(),
     birth_date: faker.date.birthdate().getDate(),
     birth_month: faker.date.birthdate().getMonth() + 1,
@@ -26,7 +26,7 @@ test('should create a user, verify login, and return 200 with success message', 
   };
 
   const apiContext = await request.newContext({
-    baseURL: 'https://www.automationexercise.com', // replace with your actual base URL
+    baseURL: "https://www.automationexercise.com", // replace with your actual base URL
   });
 
   // Create the user
@@ -36,7 +36,7 @@ test('should create a user, verify login, and return 200 with success message', 
 
   expect(createResponse.status()).toBe(200);
   const createBody = await createResponse.text();
-  expect(createBody).toContain('User created!');
+  expect(createBody).toContain("User created!");
 
   // Verify login
   const loginResponse = await apiContext.post(loginApiUrl, {
@@ -48,6 +48,5 @@ test('should create a user, verify login, and return 200 with success message', 
 
   expect(loginResponse.status()).toBe(200);
   const loginBody = await loginResponse.text();
-  expect(loginBody).toContain('User exists!');
+  expect(loginBody).toContain("User exists!");
 });
-
