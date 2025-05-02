@@ -1,10 +1,10 @@
 ## Purpose
 
 UI and API automation examples for Playwright test framework using testcases and apis defined at https://automationexercise.com/ incorporating  
-Page Object Model  
-Faker for fake dynamic data  
-Eslint for linting  
-Prettier for formatting
+1. Page Object Model  
+2. Faker for fake dynamic data  
+3. Eslint for linting  
+4. Prettier for formatting
 
 ## Getting the Latest Code
 
