@@ -26,7 +26,7 @@ test("should create a user, verify login, and return 200 with success message", 
   };
 
   const apiContext = await request.newContext({
-    baseURL: "https://www.automationexercise.com", // replace with your actual base URL
+    baseURL: process.env.BASE_URL, 
   });
 
   // Create the user
