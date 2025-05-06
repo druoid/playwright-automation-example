@@ -2,9 +2,13 @@ import { defineConfig } from "@playwright/test";
 import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 
-const envFile = process.env.ENV === 'test' ? '.env.test' : '.env.dev';
+const env = process.env.ENV || 'dev'; // default to 'dev'
+const envFile = `.env.${env}`;
+
 if (fs.existsSync(envFile)) {
   dotenv.config({ path: envFile });
+} else {
+  throw new Error(`Environment file ${envFile} not found!`);
 }
 
 export default defineConfig({
@@ -17,4 +21,5 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
   },
+  globalSetup: require.resolve('./global-setup')
 });
