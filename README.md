@@ -6,6 +6,7 @@ UI and API automation examples for Playwright test framework using testcases and
 3. Eslint for linting  
 4. Prettier for formatting
 5. The ability to manage environments
+6. Mechanism to skip tests if environment is unavailable
 
 ## Getting the Latest Code
 
