@@ -6,7 +6,7 @@ export class SignUpPage {
 
   async fillInAccountDetails(firstName: string, lastName: string) {
     await this.page.locator("#id_gender2").check();
-    await this.page.locator('input[data-qa="password"]').fill(user.password);
+    await this.page.locator('input[data-qa="password"]').fill(process.env.PASSWORD!);
     await this.page
       .locator('select[data-qa="days"]')
       .selectOption(user.dateofBirth.day.toString());
