@@ -9,8 +9,8 @@ import { CheckoutPage } from "../../pages/checkoutPage";
 import { PaymentPage } from "../../pages/paymentPage";
 import { DeleteAccountPage } from "../../pages/deleteAccountPage";
 
-import { products } from "../../support/testData";
-import { generateUser } from "../../support/fakeUser";
+import { products } from "../../utils/testData";
+import { generateUser } from "../../utils/fakeUser";
 
 test("Place order and register before checkout", async ({ page }) => {
   const user = generateUser();

@@ -1,5 +1,5 @@
 import { expect, Page } from "@playwright/test";
-import { user } from "../support/fakeUser";
+import { user } from "../utils/fakeUser";
 
 export class CheckoutPage {
   constructor(private page: Page) {}
