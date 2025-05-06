@@ -5,6 +5,7 @@ UI and API automation examples for Playwright test framework using testcases and
 2. Faker for fake dynamic data  
 3. Eslint for linting  
 4. Prettier for formatting
+5. The ability to manage environments
 
 ## Getting the Latest Code
 
@@ -26,8 +27,8 @@ Using the terminal navigate to the folder you would like the project to reside a
     Creates or updates the node_modules/ folder (where packages are stored).  
     Creates or updates package-lock.json (which locks exact versions for reproducibility).
 
-4. To run the tests in the browser run the following commands
-`npx playwright test` or `npm test`   
+4. To run the tests in the browser for the dev (default) environment run the following commands
+`npx playwright test` or `npm test` for the test environment run `ENV=test npx playwright test`  
 5. To run the tests headless run the following command  
 `npx playwright test --headed=false`
 Or headless using a specific browser `npx playwright test --project=chromium --headless`  
