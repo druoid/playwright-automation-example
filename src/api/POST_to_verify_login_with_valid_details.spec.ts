@@ -1,5 +1,5 @@
 import { test, expect, request } from "@playwright/test";
-import { faker } from "@faker-js/faker";
+import { generateUser } from "../../utils/fakeUser";
 
 test("should create a user, verify login, and return 200 with success message", async ({
   page,
@@ -7,25 +7,34 @@ test("should create a user, verify login, and return 200 with success message", 
   const createAccountApiUrl = "/api/createAccount";
   const loginApiUrl = "/api/verifyLogin";
 
-  const user = {
-    name: faker.person.firstName(),
-    email: faker.internet.email(),
-    password: "Password123!",
-    title: faker.person.prefix(),
-    birth_date: faker.date.birthdate().getDate(),
-    birth_month: faker.date.birthdate().getMonth() + 1,
-    birth_year: faker.date.birthdate().getFullYear(),
-    firstname: faker.person.firstName(),
-    lastname: faker.person.lastName(),
-    company: faker.company.name(),
-    address1: faker.location.streetAddress(),
-    address2: faker.location.secondaryAddress(),
-    country: faker.location.country(),
-    zipcode: faker.location.zipCode(),
-    state: faker.location.state(),
-    city: faker.location.city(),
-    mobile_number: faker.phone.number(),
+  const user = generateUser();
+  const password = process.env.PASSWORD || "Password123!";
+
+  // Map the generated user to match the API's expected format
+  const apiUser = {
+    name: user.name,
+    email: user.email,
+    password: password,
+    title: "Mr", // Default title since it's not in fakeUser
+    birth_date: user.dateofBirth.day,
+    birth_month: user.dateofBirth.month,
+    birth_year: user.dateofBirth.year,
+    firstname: user.name,
+    lastname: user.lastName,
+    company: user.company,
+    address1: user.address,
+    address2: "", // Not provided in fakeUser
+    country: "United States", // Default country since it's not in fakeUser
+    zipcode: user.zipcode,
+    state: user.state,
+    city: user.city,
+    mobile_number: user.mobile,
   };
+
+  // Create a new request context
+  const apiContext = await request.newContext({
+    baseURL: process.env.BASE_URL || "http://automationexercise.com",
+  });
 
   // Set up request interception
   await page.route(createAccountApiUrl, async (route) => {
@@ -44,7 +53,7 @@ test("should create a user, verify login, and return 200 with success message", 
     // Verify the request payload
     const requestData = await route.request().postData();
     expect(requestData).toContain(user.email);
-    expect(requestData).toContain(user.password);
+    expect(requestData).toContain(password);
 
     // Mock the response
     await route.fulfill({
@@ -53,13 +62,9 @@ test("should create a user, verify login, and return 200 with success message", 
     });
   });
 
-  const apiContext = await request.newContext({
-    baseURL: process.env.BASE_URL,
-  });
-
   // Create the user
   const createResponse = await apiContext.post(createAccountApiUrl, {
-    form: user,
+    form: apiUser,
   });
 
   expect(createResponse.status()).toBe(200);
@@ -70,11 +75,14 @@ test("should create a user, verify login, and return 200 with success message", 
   const loginResponse = await apiContext.post(loginApiUrl, {
     form: {
       email: user.email,
-      password: user.password,
+      password: password,
     },
   });
 
   expect(loginResponse.status()).toBe(200);
   const loginBody = await loginResponse.text();
   expect(loginBody).toContain("User exists!");
+
+  // Clean up
+  await apiContext.dispose();
 });
