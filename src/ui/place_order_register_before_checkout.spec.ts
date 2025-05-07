@@ -58,8 +58,9 @@ test("Place order and register before checkout", async ({ page }) => {
   // Verify Address and Review Order
   await checkoutPage.verifyDeliveryAddress(user.name, user.lastName);
   await checkoutPage.verifyBillingAddress(user.name, user.lastName);
-  await checkoutPage.reviewOrder(products.blueTop);
-  await checkoutPage.enterDescriptionAndPlaceOrder();
+  await checkoutPage.verifyProductDetails(products.blueTop);
+  await checkoutPage.enterDeliveryInstructions("Test delivery instructions");
+  await checkoutPage.placeOrder();
 
   // Enter payment and confirm
   await paymentPage.enterPaymentDetailsAndPayAndConfirm(
