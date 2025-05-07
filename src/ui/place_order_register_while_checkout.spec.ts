@@ -55,14 +55,16 @@ test("Place order and register while checkout", async ({ page }) => {
 
   // View cart and proceed again
   await cartPage.viewCartFromNav();
+  await cartPage.verifyCartPage();
+  await cartPage.verifyCheckoutButton();
   await cartPage.proceedToCheckout();
 
   // Address and order review
   await checkoutPage.verifyDeliveryAddress(user.name, user.lastName);
-
   await checkoutPage.verifyBillingAddress(user.name, user.lastName);
-  await checkoutPage.reviewOrder(products.blueTop);
-  await checkoutPage.enterDescriptionAndPlaceOrder();
+  await checkoutPage.verifyProductDetails(products.blueTop);
+  await checkoutPage.enterDeliveryInstructions("Test delivery instructions");
+  await checkoutPage.placeOrder();
 
   // Payment
   await paymentPage.enterPaymentDetailsAndPayAndConfirm(
