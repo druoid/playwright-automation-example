@@ -7,7 +7,7 @@ export async function isEnvReachable(baseUrl: string): Promise<boolean> {
 
     const response = await fetch(baseUrl, {
       method: 'HEAD',
-      signal: controller.signal as any // Type assertion needed due to type mismatch
+      signal: controller.signal as AbortSignal 
     });
 
     clearTimeout(timeout);
