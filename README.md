@@ -48,5 +48,5 @@ Additional configured commands
 `npm run format` runs the format script as defined in the package json which keeps code consistently styled leveraging prettier.  
 `npm test` runs playwright tests   
 
-test
+
 
