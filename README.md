@@ -7,6 +7,9 @@ UI and API automation examples for Playwright test framework using testcases and
 4. Prettier for formatting
 5. The ability to manage environments
 6. Mechanism to skip tests if environment is unavailable
+7. Created a pre-commit hook to compile, lint, and run tests to fail commits.
+8. Added a GitHub action for pull requests to compile, lint, and run tests to prevent issues.
+9. Used interception and mocking to speed tests by bypassing API calls.
 
 ## Getting the Latest Code
 
