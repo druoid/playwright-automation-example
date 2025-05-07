@@ -1,7 +1,9 @@
 import { test, expect, request } from "@playwright/test";
 import { faker } from "@faker-js/faker";
 
-test("should create a user, verify login, and return 200 with success message", async () => {
+test("should create a user, verify login, and return 200 with success message", async ({
+  page,
+}) => {
   const createAccountApiUrl = "/api/createAccount";
   const loginApiUrl = "/api/verifyLogin";
 
@@ -25,8 +27,34 @@ test("should create a user, verify login, and return 200 with success message", 
     mobile_number: faker.phone.number(),
   };
 
+  // Set up request interception
+  await page.route(createAccountApiUrl, async (route) => {
+    // Verify the request payload
+    const requestData = await route.request().postData();
+    expect(requestData).toContain(user.email);
+
+    // Mock the response
+    await route.fulfill({
+      status: 200,
+      body: "User created!",
+    });
+  });
+
+  await page.route(loginApiUrl, async (route) => {
+    // Verify the request payload
+    const requestData = await route.request().postData();
+    expect(requestData).toContain(user.email);
+    expect(requestData).toContain(user.password);
+
+    // Mock the response
+    await route.fulfill({
+      status: 200,
+      body: "User exists!",
+    });
+  });
+
   const apiContext = await request.newContext({
-    baseURL: process.env.BASE_URL, 
+    baseURL: process.env.BASE_URL,
   });
 
   // Create the user
