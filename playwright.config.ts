@@ -17,7 +17,7 @@ export default defineConfig({
   retries: 0,
   use: {
     baseURL: process.env.BASE_URL,
-    headless: false,
+    headless: true,
     viewport: { width: 1280, height: 720 },
     ignoreHTTPSErrors: true,
   },
